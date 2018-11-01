@@ -4,7 +4,6 @@ import os, json
 import re
 import tkinter as tk
 from tkinter import filedialog
-from flask_cors import CORS
 
 root = tk.Tk()
 root.withdraw()
@@ -12,7 +11,7 @@ root.withdraw()
 file_path = filedialog.askdirectory()
 print(file_path)
 app = Flask(__name__)
-CORS(app)
+
 def get_all_files(directory, file_types=[]):
     data = []
     reg_ex = "\.("
