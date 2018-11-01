@@ -5,26 +5,50 @@
         {% for block in data %}
             <div>{{block['directory']}}</div>
             {% for file in block['files'] %}
-                <button type="submit" class="w3-button videoButton" data-file="{{file}}" data-directory="{{block['directory']}}">{{file}}</button>
+                <a href="/video?dir={{block['directory']}}&file={{file}}" class="w3-button" data-file="{{file}}" data-directory="{{block['directory']}}">{{file}}</a>
                 <br>
             {% endfor %}
             <br><br>
         {% endfor %}
     </div>
 
+    <div class="w3-modal" id="modal">
+        <div class="w3-modal-content">
+            <header class="w3-container w3-teal"> 
+                <span onclick="document.getElementById('modal').style.display='none'" 
+                class="w3-button w3-display-topright">&times;</span>
+                <h2>Modal Header</h2>
+            </header>
+            <div id="modalContent">
+
+            </div>
+        </div>
+    </div>
 
     <script>
         $(".videoButton").click(function() {
             file = $(this).attr('data-file');
             dir = $(this).attr('data-directory');
-            console.log(dir, file);
-
-            var form = $('<form action="' + '/video' + '" method="GET">' +
+           
+            var form = $('<form action="' + '/video' + '" method="GET" style="display:none;">' +
             '<input type="text" name="dir" value="' + dir + '">' +
             '<input type="text" name="file" value="' + file + '">' +
             '</form>');
             $('body').append(form);
             form.submit();
+            
+            
+            $("#modal").show();
+            $("#modalContent").load(dir+file);
+            /*$.ajax({
+                type: "GET",
+                url: "/video",
+                data: {"dir": dir, "file": file},
+                success: function (response) {
+                    
+                    console.log(response);
+                }
+            });*/
         });
     </script>
 
